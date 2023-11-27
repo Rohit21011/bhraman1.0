@@ -1,74 +1,64 @@
 import { useState } from "react";
+import InputBox from "./Input";
+import Button from "./Button";
 
-const ModelBox = () => {
-    const [showModal, setShowModal] = useState(false);
-    return (
-        <>
-        
-        <button
-          className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-          type="button"
-          onClick={() => setShowModal(true)}
-        >
-          Open regular modal
-        </button>
-        
-        {showModal ? (
-          <>
-            <div
-              className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-            >
-              <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                {/*content*/}
-                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                  {/*header*/}
-                  <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                    <h3 className="text-3xl font-semibold">
-                      Modal Title
-                    </h3>
-                    <button
-                      className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                      onClick={() => setShowModal(false)}
-                    >
-                      <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                        ×
-                      </span>
-                    </button>
-                  </div>
-                  {/*body*/}
-                  <div className="relative p-6 flex-auto">
-                    <p className="my-4 text-blueGray-500 text-lg leading-relaxed">
-                      I always felt like I could do anything. That’s the main
-                      thing people are controlled by! Thoughts- their perception
-                      of themselves! They're slowed down by their perception of
-                      themselves. If you're taught you can’t do anything, you
-                      won’t do anything. I was taught I could do everything.
-                    </p>
-                  </div>
-                  {/*footer*/}
-                  <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                    <button
-                      className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={() => setShowModal(false)}
-                    >
-                      Close
-                    </button>
-                    <button
-                      className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={() => setShowModal(false)}
-                    >
-                      Save Changes
-                    </button>
-                  </div>
-                </div>
+const ModelBox = ({ close }) => {
+  return (
+    <>
+      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+        <div className="relative w-auto my-6 mx-auto max-w-3xl">
+          {/*content*/}
+          <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+            {/*header*/}
+            <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+              <h3 className="text-2xl font-bold">Create new Posts</h3>
+              <Button
+                click={close}
+                name="x"
+                customClass="p-1 ml-auto  border-0 text-black font-bold  float-right text-2xl leading-none outline-none focus:outline-none"
+              />
+            </div>
+            {/*body*/}
+            <div className="relative p-6 flex-auto">
+              <InputBox
+                type="file"
+                lable="false"
+                customClass="block w-full text-sm text-black file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-slate-800 file:text-white hover:file:bg-slate-950 "
+              />
+              <div className="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
+                <label htmlFor="editor" className="sr-only">
+                  Publish post
+                </label>
+                <textarea
+                  id="editor"
+                  rows={3}
+                  className="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:outline-none dark:text-white dark:placeholder-gray-400"
+                  placeholder="Write a caption..."
+                  required=""
+                  defaultValue={""}
+                />
+                <InputBox
+                  type="text"
+                  placeholder="Location"
+                  customClass="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-1 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                />
               </div>
             </div>
-            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-          </>
-        ) : null}
-      </>
-    )
-}
+            {/*footer*/}
+            <div className="flex items-center justify-around p-6 w-full border-t border-solid border-blueGray-200 rounded-b">
+              <Button
+                type="button"
+                name="Share"
+                customClass="text-white w-1/2 bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                click={close}
+              />
+             
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+    </>
+  );
+};
 export default ModelBox;
