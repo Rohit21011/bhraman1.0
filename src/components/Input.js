@@ -17,8 +17,10 @@ const InputBox = ({ type, name,value, placeholder,onchange ,customClass, lable})
             value={value}
             id="inline-full-name"
             type={type}
+
             onChange={onchange}
             placeholder={placeholder}
+            autoComplete="off"
           />
         
       

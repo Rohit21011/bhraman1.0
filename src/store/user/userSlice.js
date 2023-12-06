@@ -8,21 +8,22 @@ const userSlice = createSlice({
     password: "",
     user_auth_token: "",
     isLogin: false,
+    
   },
   reducers: {
-    setUserName: (state, payload) => {
+    setUserName: (state, {payload}) => {
       state.userName = payload;
     },
-    setPassword: (state, payload) => {
+    setPassword: (state, {payload}) => {
       state.password = payload;
     },
-    setEmail: (state, payload) => {
+    setEmail: (state, {payload}) => {
       state.email = payload;
     },
-    setUserAuthToken: (state, payload) => {
+    setUserAuthToken: (state, {payload}) => {
       state.user_auth_token = payload;
     },
-    setIsLogin: (state, payload) => {
+    setIsLogin: (state, {payload}) => {
       state.isLogin = payload;
     },
   },

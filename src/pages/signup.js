@@ -2,21 +2,20 @@ import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import InputBox from "../components/Input";
 import { useState } from "react";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../firebase";
+import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from "firebase/auth";
+
+import { auth, db } from "../firebase";
 import { useDispatch } from "react-redux";
-import {
-  setEmail,
-  setPassword,
-  setUserAuthToken,
-  setUserName,
-} from "../features/user/userSlice";
+
 import AlertMessage from "../components/alertMessage";
+import { Firestore, addDoc, collection, doc, getDoc, getFirestore, query, setDoc, where } from "firebase/firestore";
+import { userSignUp } from "../services/user.service";
 const Signup = () => {
   const [isHide, setHide] = useState(false);
   const [message,setMessage] = useState("")
   const [bgColor,setBgColor] = useState("")
   const [loader, setLoader] = useState(false);
+const dispatch = useDispatch();
   const closeAlert = (e) => {
     e.preventDefault();
     
@@ -30,7 +29,7 @@ const Signup = () => {
     email: "",
     password: "",
   });
-  const dispatch = useDispatch();
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUser((prevUser) => ({
@@ -42,18 +41,8 @@ const Signup = () => {
     e.preventDefault();
     setLoader(true);
     try {
-      const userCredentials = await createUserWithEmailAndPassword(
-        auth,
-        user.email,
-        user.password
-      );
-      await updateProfile(userCredentials.user, {
-        displayName: user.username,
-      });
-      dispatch(setEmail(user.email));
-      dispatch(setPassword(user.password));
-      dispatch(setUserName(user.username));
-
+      userSignUp(user)
+   
       setLoader(false);
       setHide(true);
       setBgColor("bg-green-50");

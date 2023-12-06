@@ -1,8 +1,17 @@
 import { useState } from "react";
 import InputBox from "./Input";
 import Button from "./Button";
+import { addPost } from "../services/addPost.service";
 
-const ModelBox = ({ close }) => {
+const ModelBox = ({close,onclick}) => {
+
+  const [file,setFile] = useState(null);
+  const [location,setLocation] = useState("Nashik");
+  const [caption,setCaption] = useState("hello nashik");
+
+  const handleClick = () => {
+    addPost(file,location,caption)
+  }
   return (
     <>
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -23,6 +32,7 @@ const ModelBox = ({ close }) => {
               <InputBox
                 type="file"
                 lable="false"
+                onchange={(e)=>setFile(e.target.files[0])}
                 customClass="block w-full text-sm text-black file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-slate-800 file:text-white hover:file:bg-slate-950 "
               />
               <div className="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
@@ -32,6 +42,7 @@ const ModelBox = ({ close }) => {
                 <textarea
                   id="editor"
                   rows={3}
+                  onChange={(e)=>setCaption(e.target.value)}
                   className="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:outline-none dark:text-white dark:placeholder-gray-400"
                   placeholder="Write a caption..."
                   required=""
@@ -40,6 +51,7 @@ const ModelBox = ({ close }) => {
                 <InputBox
                   type="text"
                   placeholder="Location"
+                  onchange={(e)=>setLocation(e.target.value)}
                   customClass="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-1 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                 />
               </div>
@@ -50,7 +62,7 @@ const ModelBox = ({ close }) => {
                 type="button"
                 name="Share"
                 customClass="text-white w-1/2 bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                click={close}
+                click={handleClick}
               />
              
             </div>

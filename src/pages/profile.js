@@ -1,4 +1,7 @@
+import { useSelector } from "react-redux";
+
 const Profile = () => {
+  const username = useSelector((state)=>state.user.userName);
     return (
         <>
     <div className="lg:w-8/12 lg:mx-auto mb-8">
@@ -7,8 +10,8 @@ const Profile = () => {
           {/* profile image */}
           <img
             className="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full
-               border-2 border-pink-600 p-1"
-            src="https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
+               border-2 border-gray-600 p-1"
+            src={require("../assets/profilePicture.jpg")}
             alt="profile"
           />
         </div>
@@ -16,7 +19,7 @@ const Profile = () => {
         <div className="w-8/12 md:w-7/12 ml-4">
           <div className="md:flex md:flex-wrap md:items-center mb-4">
             <h2 className="text-3xl inline-block  md:mr-2 text-black font-bold mb-2 sm:mb-0">
-              mrtravlerrr_
+             {username}
             </h2>
             {/* badge */}
             <span
@@ -109,163 +112,164 @@ const Profile = () => {
         </ul>
         {/* flexbox grid */}
         <div className="flex flex-wrap -mx-px md:-mx-3">
-          {/* column */}
-          <div className="w-1/3 p-px md:px-3">
-            {/* post 1*/}
-            <a href="#">
-              <article className="post bg-gray-100 text-white relative pb-full md:mb-6">
-                {/* post image*/}
-                <img
-                  className="w-full h-full absolute left-0 top-0 object-cover"
-                  src="https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                  alt="image"
-                />
-                <i className="fas fa-square absolute right-0 top-0 m-1" />
-                {/* overlay*/}
-                <div
-                  className="overlay bg-gray-800 bg-opacity-25 w-full h-full absolute 
+  {/* column */}
+  <div className="w-1/3 p-px md:px-3">
+    {/* post 1*/}
+    <a href="#">
+      <article className="post bg-gray-100 text-white relative pb-full md:mb-6">
+        {/* post image*/}
+        <img
+          className="w-full h-full absolute left-0 top-0 object-cover"
+          src="https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+          alt="image"
+        />
+        <i className="fas fa-square absolute right-0 top-0 m-1" />
+        {/* overlay*/}
+        <div
+          className="overlay bg-gray-800 bg-opacity-25 w-full h-full absolute 
                           left-0 top-0 hidden"
-                >
-                  <div
-                    className="flex justify-center items-center 
+        >
+          <div
+            className="flex justify-center items-center 
                               space-x-4 h-full"
-                  >
-                    <span className="p-2">
-                      <i className="fas fa-heart" />
-                      412K
-                    </span>
-                    <span className="p-2">
-                      <i className="fas fa-comment" />
-                      2,909
-                    </span>
-                  </div>
-                </div>
-              </article>
-            </a>
-          </div>
-          <div className="w-1/3 p-px md:px-3">
-            <a href="#">
-              {/* post 2 */}
-              <article className="post bg-gray-100 text-white relative pb-full md:mb-6">
-                <img
-                  className="w-full h-full absolute left-0 top-0 object-cover"
-                  src="https://images.unsplash.com/photo-1498409570040-05bf6d3dd5b5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                  alt="image"
-                />
-                {/* overlay*/}
-                <div
-                  className="overlay bg-gray-800 bg-opacity-25 w-full h-full absolute 
-                          left-0 top-0 hidden"
-                >
-                  <div
-                    className="flex justify-center items-center 
-                              space-x-4 h-full"
-                  >
-                    <span className="p-2">
-                      <i className="fas fa-heart" />
-                      412K
-                    </span>
-                    <span className="p-2">
-                      <i className="fas fa-comment" />
-                      1,993
-                    </span>
-                  </div>
-                </div>
-              </article>
-            </a>
-          </div>
-          <div className="w-1/3 p-px md:px-3">
-            <a href="#">
-              <article className="post bg-gray-100 text-white relative pb-full  md:mb-6">
-                <img
-                  className="w-full h-full absolute left-0 top-0 object-cover"
-                  src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                  alt="image"
-                />
-                {/* overlay*/}
-                <div
-                  className="overlay bg-gray-800 bg-opacity-25 w-full h-full absolute 
-                          left-0 top-0 hidden"
-                >
-                  <div
-                    className="flex justify-center items-center 
-                              space-x-4 h-full"
-                  >
-                    <span className="p-2">
-                      <i className="fas fa-heart" />
-                      112K
-                    </span>
-                    <span className="p-2">
-                      <i className="fas fa-comment" />
-                      2,090
-                    </span>
-                  </div>
-                </div>
-              </article>
-            </a>
-          </div>
-          <div className="w-1/3 p-px md:px-3">
-            <a href="#">
-              <article className="post bg-gray-100 text-white relative pb-full md:mb-6">
-                <img
-                  className="w-full h-full absolute left-0 top-0 object-cover"
-                  src="https://images.unsplash.com/photo-1533105079780-92b9be482077?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                  alt="image"
-                />
-                <i className="fas fa-video absolute right-0 top-0 m-1" />
-                {/* overlay*/}
-                <div
-                  className="overlay bg-gray-800 bg-opacity-25 w-full h-full absolute 
-                          left-0 top-0 hidden"
-                >
-                  <div
-                    className="flex justify-center items-center 
-                              space-x-4 h-full"
-                  >
-                    <span className="p-2">
-                      <i className="fas fa-heart" />
-                      841K
-                    </span>
-                    <span className="p-2">
-                      <i className="fas fa-comment" />
-                      909
-                    </span>
-                  </div>
-                </div>
-              </article>
-            </a>
-          </div>
-          <div className="w-1/3 p-px md:px-3">
-            <a href="#">
-              <article className="post bg-gray-100 text-white relative pb-full md:mb-6">
-                <img
-                  className="w-full h-full absolute left-0 top-0 object-cover"
-                  src="https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80"
-                  alt="image"
-                />
-                {/* overlay*/}
-                <div
-                  className="overlay bg-gray-800 bg-opacity-25 w-full h-full absolute 
-                          left-0 top-0 hidden"
-                >
-                  <div
-                    className="flex justify-center items-center 
-                              space-x-4 h-full"
-                  >
-                    <span className="p-2">
-                      <i className="fas fa-heart" />
-                      120K
-                    </span>
-                    <span className="p-2">
-                      <i className="fas fa-comment" />
-                      3,909
-                    </span>
-                  </div>
-                </div>
-              </article>
-            </a>
+          >
+            <span className="p-2">
+              <i className="fas fa-heart" />
+              412K
+            </span>
+            <span className="p-2">
+              <i className="fas fa-comment" />
+              2,909
+            </span>
           </div>
         </div>
+      </article>
+    </a>
+  </div>
+  <div className="w-1/3 p-px md:px-3">
+    <a href="#">
+      {/* post 2 */}
+      <article className="post bg-gray-100 text-white relative pb-full md:mb-6">
+        <img
+          className="w-full h-full absolute left-0 top-0 object-cover"
+          src="https://images.unsplash.com/photo-1498409570040-05bf6d3dd5b5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+          alt="image"
+        />
+        {/* overlay*/}
+        <div
+          className="overlay bg-gray-800 bg-opacity-25 w-full h-full absolute 
+                          left-0 top-0 hidden"
+        >
+          <div
+            className="flex justify-center items-center 
+                              space-x-4 h-full"
+          >
+            <span className="p-2">
+              <i className="fas fa-heart" />
+              412K
+            </span>
+            <span className="p-2">
+              <i className="fas fa-comment" />
+              1,993
+            </span>
+          </div>
+        </div>
+      </article>
+    </a>
+  </div>
+  <div className="w-1/3 p-px md:px-3">
+    <a href="#">
+      <article className="post bg-gray-100 text-white relative pb-full  md:mb-6">
+        <img
+          className="w-full h-full absolute left-0 top-0 object-cover"
+          src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+          alt="image"
+        />
+        {/* overlay*/}
+        <div
+          className="overlay bg-gray-800 bg-opacity-25 w-full h-full absolute 
+                          left-0 top-0 hidden"
+        >
+          <div
+            className="flex justify-center items-center 
+                              space-x-4 h-full"
+          >
+            <span className="p-2">
+              <i className="fas fa-heart" />
+              112K
+            </span>
+            <span className="p-2">
+              <i className="fas fa-comment" />
+              2,090
+            </span>
+          </div>
+        </div>
+      </article>
+    </a>
+  </div>
+  <div className="w-1/3 p-px md:px-3">
+    <a href="#">
+      <article className="post bg-gray-100 text-white relative pb-full md:mb-6">
+        <img
+          className="w-full h-full absolute left-0 top-0 object-cover"
+          src="https://images.unsplash.com/photo-1533105079780-92b9be482077?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+          alt="image"
+        />
+        <i className="fas fa-video absolute right-0 top-0 m-1" />
+        {/* overlay*/}
+        <div
+          className="overlay bg-gray-800 bg-opacity-25 w-full h-full absolute 
+                          left-0 top-0 hidden"
+        >
+          <div
+            className="flex justify-center items-center 
+                              space-x-4 h-full"
+          >
+            <span className="p-2">
+              <i className="fas fa-heart" />
+              841K
+            </span>
+            <span className="p-2">
+              <i className="fas fa-comment" />
+              909
+            </span>
+          </div>
+        </div>
+      </article>
+    </a>
+  </div>
+  <div className="w-1/3 p-px md:px-3">
+    <a href="#">
+      <article className="post bg-gray-100 text-white relative pb-full md:mb-6">
+        <img
+          className="w-full h-full absolute left-0 top-0 object-cover"
+          src="https://images.unsplash.com/photo-1475688621402-4257c812d6db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80"
+          alt="image"
+        />
+        {/* overlay*/}
+        <div
+          className="overlay bg-gray-800 bg-opacity-25 w-full h-full absolute 
+                          left-0 top-0 hidden"
+        >
+          <div
+            className="flex justify-center items-center 
+                              space-x-4 h-full"
+          >
+            <span className="p-2">
+              <i className="fas fa-heart" />
+              120K
+            </span>
+            <span className="p-2">
+              <i className="fas fa-comment" />
+              3,909
+            </span>
+          </div>
+        </div>
+      </article>
+    </a>
+  </div>
+</div>
+
       </div>
     </div>
 

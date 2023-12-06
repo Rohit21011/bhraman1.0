@@ -1,4 +1,4 @@
-const Posts = () => {
+const Posts = ({image,caption,location}) => {
     return (
         <>
   <div className="p-4">
@@ -13,11 +13,12 @@ const Posts = () => {
             8fact
           </span>
           <span className="text-gray-600 text-xs block">
-            Asheville, North Carolina
+            {location}
           </span>
         </div>
       </div>
-      <img src="https://picsum.photos/id/244/900/900" />
+      <img src={image} width={"400px"} />
+      <p>{caption}</p>
       <div className="flex items-center justify-between mx-4 mt-3 mb-2">
         <div className="flex gap-5">
           <svg fill="#262626" height={24} viewBox="0 0 48 48" width={24}>

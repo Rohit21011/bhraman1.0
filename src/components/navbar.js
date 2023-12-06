@@ -3,7 +3,6 @@ import {
   HiOutlineCog,
   HiOutlineHome,
   HiOutlinePlusCircle,
-  HiOutlineSearch,
   HiOutlineUser,
 } from "react-icons/hi";
 import { HiOutlineArrowRightOnRectangle } from "react-icons/hi2";
@@ -11,10 +10,29 @@ import { MdOutlineTravelExplore } from "react-icons/md";
 
 import ModelBox from "./modelBox";
 import { useState } from "react";
-import InputBox from "./Input";
-import Button from "./Button";
+
+import { useDispatch } from "react-redux";
+
+import { signOut } from "firebase/auth";
+import { auth, storage } from "../firebase";
+import {
+  setEmail,
+  setIsLogin,
+  setUserAuthToken,
+  setUserName,
+} from "../store/user/userSlice";
 const Navbar = () => {
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
+  const [file,setFile] = useState();
+  const Logout = () => {
+    signOut(auth);
+    dispatch(setEmail(""));
+    dispatch(setUserAuthToken(""));
+    dispatch(setUserName(""));
+    dispatch(setIsLogin(false));
+  };
+  
   return (
     <>
       {/* component */}
@@ -42,7 +60,7 @@ const Navbar = () => {
               </li>
               <li className="mb-2">
                 <Link
-                  to="/explore"
+                  to="/user/explore"
                   className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-200 text-gray-600 hover:text-gray-800 border- border-transparent  hover:border-gray-800  pr-6 rounded-md"
                 >
                   <MdOutlineTravelExplore
@@ -73,7 +91,7 @@ const Navbar = () => {
               </li>
               <li className="mb-2">
                 <Link
-                  to="/profile"
+                  to="/user/profile"
                   className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-200 text-gray-600 hover:text-gray-800 border- border-transparent hover:border-gray-800  pr-6 rounded-md"
                 >
                   <HiOutlineUser
@@ -88,7 +106,7 @@ const Navbar = () => {
               </li>
               <li className="mb-2">
                 <Link
-                  to="/settings"
+                  to="/user/settings"
                   className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-200 text-gray-600 hover:text-gray-800 border- border-transparent hover:border-gray-800  pr-6 rounded-md"
                 >
                   <HiOutlineCog
@@ -103,11 +121,13 @@ const Navbar = () => {
               </li>
               <li className="mb-2">
                 <Link
-                  to="/logout"
+                  to="#"
+                  onClick={Logout}
                   className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-200 text-gray-600 hover:text-gray-800 border- border-transparent hover:border-gray-800  pr-6 rounded-md"
                 >
                   <HiOutlineArrowRightOnRectangle
                     fontSize="23px"
+                    onClick={Logout}
                     color="black"
                     className="inline-flex justify-center items-center ml-4"
                   />
@@ -137,8 +157,8 @@ const Navbar = () => {
 
           <div>
             <Link
-              to="/Explore"
-              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-200 text-gray-600 hover:text-gray-800 border- border-transparent hover:border-gray-800  pr-6 rounded-md"
+              to="user/explore"
+              className="relative flex flex-row items-center h-11 focus:outline-none text-gray-600 hover:text-gray-800 border- border-transparent hover:border-gray-800  pr-6 rounded-md"
             >
               <MdOutlineTravelExplore
                 fontSize="23px"
@@ -151,7 +171,7 @@ const Navbar = () => {
             <Link
               to="#"
               onClick={() => setShowModal(true)}
-              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-200 text-gray-600 hover:text-gray-800 border- border-transparent hover:border-gray-800  pr-6 rounded-md"
+              className="relative flex flex-row items-center h-11 focus:outline-none  text-gray-600 hover:text-gray-800 border- border-transparent hover:border-gray-800  pr-6 rounded-md"
             >
               <HiOutlinePlusCircle
                 fontSize="23px"
@@ -162,8 +182,8 @@ const Navbar = () => {
           </div>
           <div>
             <Link
-              to="/profile"
-              className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-200 text-gray-600 hover:text-gray-800 border- border-transparent hover:border-gray-800  pr-6 rounded-md"
+              to="/user/profile"
+              className="relative flex flex-row items-center h-11 focus:outline-none text-gray-600 hover:text-gray-800 border- border-transparent hover:border-gray-800  pr-6 rounded-md"
             >
               <HiOutlineUser
                 fontSize="23px"
