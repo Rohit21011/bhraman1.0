@@ -1,5 +1,5 @@
 
-import Button from "./Button";
+
 
 const AlertMessage = ({hide,message,click,bgColor}) => {
  

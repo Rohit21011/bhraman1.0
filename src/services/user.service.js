@@ -17,11 +17,13 @@ export const userSignUp = async({email,password,username}) =>{
           }); 
           
          await setDoc(doc(collection(db,"user"), userCredentials.user.uid), {
+          userId:userCredentials.user.uid,
           username: userCredentials.user.displayName,
           email: userCredentials.user.email,
+          profilePicture:"",
+          bio:"",
           followers:[],
           following:[],
-          savePost:[],
         });
     }
 

@@ -2,7 +2,6 @@ import "./App.css";
 import Signup from "./pages/signup";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/home";
-import AddPost from "./pages/addPost";
 import Login from "./pages/login";
 import Profile from "./pages/profile";
 import Navbar from "./components/navbar";
@@ -18,6 +17,7 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
+      <div className="container mx-auto ">
         <div className={isLogin ? "sm:flex flex-row" : ""}>
           {isLogin && (
             <div className="sm:basis-1/4 basis-60">
@@ -31,11 +31,11 @@ const App = () => {
             </Route>
             <Route path="/user" element={<Dashboard isLogin={isLogin} />}>
               <Route path="home" element={<Home />} />
-              <Route path="addPost" element={<AddPost />} />
               <Route path="explore" element={<Explore />} />
               <Route path="profile" element={<Profile />} />
             </Route>
           </Routes>
+        </div>
         </div>
       </BrowserRouter>
     </>

@@ -2,22 +2,24 @@
 
 import { getDownloadURL, getStorage,ref,uploadBytes } from "firebase/storage";
 import { auth, db } from "../firebase";
-import { Firestore, addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 const storage = getStorage();
 
 
 export const addPost = async (file,location,caption) => {
-    const fileExtension = file?.type.split('/').pop();
+
     try{
         
-        const uid = auth.currentUser.uid
-        const imageRef = ref(storage, `post/${uid}.${fileExtension}`);
+        
+        const imageRef = ref(storage, `post/${auth.currentUser.uid}${file.name}`);
       
         await uploadBytes(imageRef, file)
         const downloadURL = await getDownloadURL(imageRef);
         const postDocRef = await addDoc(collection(db, 'posts'), {
-            userId: uid, 
+            userId: auth.currentUser.uid, 
+            userName:auth.currentUser.displayName,
+            timestamp:serverTimestamp(),
             caption,
             location,
             downloadURL,

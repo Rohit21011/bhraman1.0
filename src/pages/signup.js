@@ -15,7 +15,6 @@ const Signup = () => {
   const [message,setMessage] = useState("")
   const [bgColor,setBgColor] = useState("")
   const [loader, setLoader] = useState(false);
-const dispatch = useDispatch();
   const closeAlert = (e) => {
     e.preventDefault();
     
@@ -58,7 +57,7 @@ const dispatch = useDispatch();
   };
   return (
     <div className="flex justify-around h-screen items-center">
-      <form className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-1/3">
+      <form className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 md:w-2/5">
         <InputBox
           type="text"
           onchange={handleInputChange}

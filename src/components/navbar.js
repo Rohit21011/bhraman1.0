@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import {
-  HiOutlineCog,
   HiOutlineHome,
   HiOutlinePlusCircle,
   HiOutlineUser,
@@ -14,7 +13,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { signOut } from "firebase/auth";
-import { auth, storage } from "../firebase";
+import { auth} from "../firebase";
 import {
   setEmail,
   setIsLogin,
@@ -24,7 +23,6 @@ import {
 const Navbar = () => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
-  const [file,setFile] = useState();
   const Logout = () => {
     signOut(auth);
     dispatch(setEmail(""));
@@ -39,7 +37,7 @@ const Navbar = () => {
       <div className="sm:min-h-screen sm:flex sm:flex-col  sm:flex-auto  sm:text-gray-800 hidden">
         <div className="fixed flex flex-col  top-0 left-0 lg:w-64 bg-white h-full border-r ">
           <div className="flex items-center justify-center ">
-            <img src={require("../assets/logo.png")} />
+            <img src={require("../assets/logo.png")} alt="logo"/>
           </div>
           <div className="overflow-y-auto overflow-x-hidden flex items-center justify-around">
             <ul className="flex flex-col w-52">
@@ -105,19 +103,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="mb-2">
-                <Link
-                  to="/user/settings"
-                  className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-200 text-gray-600 hover:text-gray-800 border- border-transparent hover:border-gray-800  pr-6 rounded-md"
-                >
-                  <HiOutlineCog
-                    fontSize="23px"
-                    color="black"
-                    className="inline-flex justify-center items-center ml-4"
-                  />
-                  <span className="ml-2 text-md tracking-wide truncate text-black font-medium ">
-                    Settings
-                  </span>
-                </Link>
+               
               </li>
               <li className="mb-2">
                 <Link
@@ -194,7 +180,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      {showModal ? <ModelBox close={() => setShowModal(false)} /> : null}
+      {showModal ? <ModelBox close={() => setShowModal(false)} btnName="Share" isUpdate={false} CaptionPlaceHolder="Write a caption..." isLocation={true}/> : null}
     </>
   );
 };

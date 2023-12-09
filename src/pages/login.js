@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import InputBox from "../components/Input";
 import { useEffect, useState } from "react";
-import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { onAuthStateChanged} from "firebase/auth";
 import { useDispatch } from "react-redux";
 import {
   setEmail,
@@ -72,7 +72,7 @@ useEffect(()=>{
   return (
     <>
       <div className="flex justify-around h-screen items-center">
-        <form className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-1/3">
+        <form className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 md:w-2/5">
           <InputBox
             type="email"
             name="email"
