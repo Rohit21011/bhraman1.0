@@ -19,7 +19,7 @@ const Profile = () => {
   const [followerList, setFollowerList] = useState();
   const [followingList, setFollowingList] = useState();
   const [model, setModel] = useState(false);
-  const [isRemove,setIsRemove] = useState(false);
+  const [isRemove, setIsRemove] = useState(false);
   useEffect(() => {
     const fetch = async () => {
       const getProfile = await profile(auth.currentUser.uid);
@@ -34,46 +34,37 @@ const Profile = () => {
       setPostCount(getPosts.length);
     };
     fetch();
-  }, [model,isRemove]);
+  }, [model, isRemove]);
 
   const handleRemoveFollower = async (userId) => {
-   
-    await removeFollower(userId)
-    toast('Removed!',
-    {
-     
+    await removeFollower(userId);
+    toast("Removed!", {
       style: {
-       borderRadius: '18px',
-       background: '#333',
-       color: '#fff',
+        borderRadius: "18px",
+        background: "#333",
+        color: "#fff",
       },
-    }
-  );
-    setIsRemove(!isRemove); 
+    });
+    setIsRemove(!isRemove);
   };
   const handleRemoveFollowing = async (userId) => {
-   await removeFollowing(userId)
-   toast('Removed!',
-   {
-    
-     style: {
-      borderRadius: '15px',
-      background: '#333',
-      color: '#fff'
-      
-     },
-   }
- );
-   setIsRemove(!isRemove);
-      
+    await removeFollowing(userId);
+    toast("Removed!", {
+      style: {
+        borderRadius: "15px",
+        background: "#333",
+        color: "#fff",
+      },
+    });
+    setIsRemove(!isRemove);
   };
   return (
     <>
-    <Toaster
-  position="bottom-center"
-  reverseOrder={false}
-  containerClassName="mb-12"
-/>
+      <Toaster
+        position="bottom-center"
+        reverseOrder={false}
+        containerClassName="mb-12"
+      />
       <div className=" lg:w-8/12 lg:mx-auto mb-8">
         <header className="flex flex-wrap items-center p-4 md:py-8">
           <div className="md:w-3/12 md:ml-16">
@@ -201,10 +192,7 @@ const Profile = () => {
                 href="#posts"
                 onClick={() => setActiveTab("post")}
               >
-                
-                <span className="inline text-black font-bold">
-                  post
-                </span>
+                <span className="inline text-black font-bold">post</span>
               </a>
             </li>
             <li
@@ -219,14 +207,11 @@ const Profile = () => {
                 href="#followers"
                 onClick={() => setActiveTab("followers")}
               >
-               
-                <span className="inline text-black font-bold">
-                  followers
-                </span>
+                <span className="inline text-black font-bold">followers</span>
               </a>
             </li>
             <li
-               className={
+              className={
                 activeTab === "following"
                   ? "border-t border-gray-700 -mt-px text-gray-700"
                   : ""
@@ -237,9 +222,7 @@ const Profile = () => {
                 href="#following"
                 onClick={() => setActiveTab("following")}
               >
-                <span className="inline text-black font-bold">
-                  following
-                </span>
+                <span className="inline text-black font-bold">following</span>
               </a>
             </li>
           </ul>
@@ -318,8 +301,6 @@ const Profile = () => {
               </div>
             </div>
           )}
-
-          
         </div>
       </div>
     </>

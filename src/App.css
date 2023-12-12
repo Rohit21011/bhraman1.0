@@ -37,3 +37,27 @@
     transform: rotate(360deg);
   }
 }
+.heart{
+  fill: #e23b3b;
+  font-size: 23px;
+}
+.animated-heart {
+  animation: size 0.4s;
+  fill: #e23b3b;
+}
+
+@keyframes size {
+  0% {
+    font-size: 23px;
+  }
+  50% {
+    font-size: 25px;
+  }
+  100% {
+    font-size: 23px;
+  }
+}
+
+
+
+
