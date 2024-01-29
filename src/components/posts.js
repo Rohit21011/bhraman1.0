@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { auth } from "../firebase";
 import { connections } from "../services/connections.service";
 import InputBox from "./Input";
-import { likes } from "../services/likes.service";
+import { likeCount, likes, unLikes } from "../services/likes.service";
 import { BsHeart, BsHeartFill, BsInfoCircle } from "react-icons/bs";
 import { TfiCommentsSmiley } from "react-icons/tfi";
 import ModelBox from "./modelBox";
 import Button from "./Button";
 import { addComment, getAllComments } from "../services/comments.service";
+import toast from "react-hot-toast";
 
 const Posts = ({
   image,
@@ -16,6 +17,7 @@ const Posts = ({
   location,
   userName,
   followedUserId,
+  moreDetails
 }) => {
   const [model, setModel] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
@@ -24,12 +26,13 @@ const Posts = ({
   const [comment, setComment] = useState("");
   const [postInfoModel, setPostInfoModel] = useState(false);
   const [showCommentsModel, setShowCommentsModel] = useState(false);
+  const [isFollow,setIsfollow] = useState(false);
   useEffect(() => {
     // Check local storage to see if the post is liked
   
     const fetch = async () => {
       
-      const { getLikeStatus, getLikesCount } = await likes(
+      const { getLikeStatus, getLikesCount } = await likeCount(
         postId,
         followedUserId
       );
@@ -37,13 +40,14 @@ const Posts = ({
       setLikesCount(getLikesCount);
       const d =await getAllComments(postId)
       setComments(d)
-    
     };
     fetch();
-  }, []);
+  }, [comment]);
 
   const follow = () => {
     connections(followedUserId);
+    setIsfollow(true);
+
   };
   const handleLikes = async () => {
     const { getLikeStatus, getLikesCount } = await likes(
@@ -54,15 +58,26 @@ const Posts = ({
     setIsLiked(getLikeStatus);
     setLikesCount(getLikesCount);
   };
-  const handleComments = () => {
-    addComment(postId,comment)
+  // const handleUnLikes = async () => {
+  //   const { getLikeStatus, getLikesCount } = await unLikes(
+  //     postId,
+  //     followedUserId
+  //   );
+  //   localStorage.setItem(`like${postId}`,true)
+  //   setIsLiked(getLikeStatus);
+  //   setLikesCount(getLikesCount);
+  // };
+
+  const handleComments = async() => {
+    await addComment(postId,comment)
+    toast.success("comment added!")
     setComment("")
   };
   const handleInputChange = (event) => {
     setComment(event.target.value);
   };
 
- 
+ console.log()
 
   return (
     <>
@@ -72,7 +87,7 @@ const Posts = ({
             <div className="flex items-center ">
               <img
                 className="h-8 w-8 rounded-full"
-                src="https://picsum.photos/id/1027/150/150"
+                src={require("../assets/profilePicture.jpg")}
                 alt="bhraman1.0"
               />
               <div className="ml-3 ">
@@ -87,7 +102,7 @@ const Posts = ({
             </div>
             <div className="text-lg font-semibold">
               <a href="#Follow" onClick={follow}>
-                {userName !== auth.currentUser.displayName ? "Follow" : ""}
+                {userName !== auth.currentUser.displayName && !isFollow ?  "Follow" : ""}
               </a>
             </div>
           </div>
@@ -172,7 +187,15 @@ const Posts = ({
                   />
                 </div>
                 {/*body*/}
-                <div className="relative pl-0 pr-0 pt-3 flex-auto"></div>
+                {moreDetails && <div className="relative flex-auto leading-9 p-10">
+                  <p><b>Date : </b>{moreDetails.date}</p>
+                  <p><b>Time:</b>{moreDetails.time}</p>
+                  <p><b>Travel vie:</b>{moreDetails.vie}</p>
+                  <p><b>Total expense(per person):</b>{moreDetails.Expenses}</p>
+                  <p><b>Best time to go:</b>{moreDetails.time}</p>
+                  <p><b>luggage:</b>{moreDetails.carrie}</p>
+                </div>}
+                
                 {/*footer*/}
               </div>
             </div>
@@ -202,7 +225,7 @@ const Posts = ({
                 <div className="relative flex flex-col h-96 overflow-y-scroll pl-0 pr-0 pt-3 flex-auto">
                   
                     {
-                      getComments.map((value,key)=>(
+                      getComments?getComments.map((value,key)=>(
                         <div className="flex items-center flex-wrap  px-4 py-2 ">
                         <div>
                         {/* <img
@@ -216,7 +239,7 @@ const Posts = ({
                           <span>  {value.comment}</span>
                         </div>
                         </div>
-                      ))
+                      )):"No comments Yet"
                     }
                   
                 

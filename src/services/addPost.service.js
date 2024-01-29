@@ -7,9 +7,9 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 const storage = getStorage();
 
 
-export const addPost = async (file,location,caption) => {
+export const addPost = async (file,location,caption,moreDetails) => {
 
-    try{
+   
         
         
         const imageRef = ref(storage, `post/${auth.currentUser.uid}${file.name}`);
@@ -22,13 +22,12 @@ export const addPost = async (file,location,caption) => {
             timestamp:serverTimestamp(),
             caption,
             location,
+            moreDetails:moreDetails,
             downloadURL,
             likes:[],
             comments:[]
           });
           console.log(postDocRef)
-}
-    catch(error){
-console.log(error)
-    }
+
+ 
 }

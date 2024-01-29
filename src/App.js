@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import LoginRoute from "./protectedRoute/loginRoute";
 import Dashboard from "./protectedRoute/dashboard";
 
+
 const App = () => {
   const isLogin = useSelector((state) => state.user.isLogin);
 
@@ -17,8 +18,8 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
-      <div className="container mx-auto ">
-        <div className={isLogin ? "sm:flex flex-row" : ""}>
+      <div className={isLogin && "container-fluid sm:flex flex-row"}>
+       
           {isLogin && (
             <div className="sm:basis-1/4 basis-60">
               <Navbar />
@@ -33,10 +34,11 @@ const App = () => {
               <Route path="home" element={<Home />} />
               <Route path="explore" element={<Explore />} />
               <Route path="profile" element={<Profile />} />
+             
             </Route>
           </Routes>
         </div>
-        </div>
+        
       </BrowserRouter>
     </>
   );

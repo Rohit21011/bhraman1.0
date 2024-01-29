@@ -54,17 +54,14 @@ const Profile = () => {
         borderRadius: "15px",
         background: "#333",
         color: "#fff",
+       
       },
     });
     setIsRemove(!isRemove);
   };
   return (
     <>
-      <Toaster
-        position="bottom-center"
-        reverseOrder={false}
-        containerClassName="mb-12"
-      />
+    
       <div className=" lg:w-8/12 lg:mx-auto mb-8">
         <header className="flex flex-wrap items-center p-4 md:py-8">
           <div className="md:w-3/12 md:ml-16">
@@ -113,6 +110,7 @@ const Profile = () => {
                   isUpdate={true}
                   title="Update post"
                   CaptionPlaceHolder="Write your Bio"
+                  showMore={false}
                 />
               ) : null}
             </div>

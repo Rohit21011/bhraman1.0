@@ -7,21 +7,30 @@ import { setAddPost } from "../store/post/postSlice";
 import { updateUser } from "../services/updateUser.service";
 import toast, { Toaster } from "react-hot-toast";
 
-const ModelBox = ({close,btnName,CaptionPlaceHolder,isLocation,isUpdate,title}) => {
-
-  const [file,setFile] = useState(null);
-  const [location,setLocation] = useState("Nashik");
-  const [caption,setCaption] = useState("hello nashik");
-  const [loader,setLoader] = useState(false);
+const ModelBox = ({
+  close,
+  btnName,
+  CaptionPlaceHolder,
+  isLocation,
+  isUpdate,
+  title,
+  showMore=true,
+}) => {
+  const [file, setFile] = useState(null);
+  const [location, setLocation] = useState("Nashik");
+  const [caption, setCaption] = useState("hello nashik");
+  const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
-  const post = useSelector((state)=>state.post.addPost)
+  const post = useSelector((state) => state.post.addPost);
   const [imagePreview, setImagePreview] = useState(null);
+  const [addDetails, setAddDetails] = useState(false);
+  const [moreDetails, setMoreDetails] = useState({});
   const handleImageChange = (e) => {
-    const filePreview= e.target.files[0];
+    const filePreview = e.target.files[0];
 
     if (filePreview) {
       const reader = new FileReader();
-      setFile(filePreview)
+      setFile(filePreview);
       reader.onloadend = () => {
         setImagePreview(reader.result);
       };
@@ -29,29 +38,38 @@ const ModelBox = ({close,btnName,CaptionPlaceHolder,isLocation,isUpdate,title}) 
       reader.readAsDataURL(filePreview);
     }
   };
-  const addNewPost = async() => {
-    setLoader(true)
-   await addPost(file,location,caption)
-    dispatch(setAddPost(!post))
-    setLoader(false)
-    toast.success("Post Shared!")
-  }
-   const updateProfile = async () => {
+  const addNewPost = async () => {
     try{
-      setLoader(true)
-      await updateUser(file,caption)
-      toast.success("Profile Update!")
-     setLoader(false)
+      setLoader(true);
+      await addPost(file, location, caption, moreDetails);
+     dispatch(setAddPost(!post));
+     setLoader(false);
+     toast.success("Post Shared!");
+    }
+    catch(err){
+      toast.error("please fill valid data");
     }
     
-    catch(err){
-    toast.error(err.message)
+  };
+  const updateProfile = async () => {
+    try {
+      setLoader(true);
+      await updateUser(file, caption);
+      toast.success("Profile Update!");
+      setLoader(false);
+    } catch (err) {
+      toast.error(err.message);
     }
-  } 
- 
+  };
+
+  const handleMoreDetails = (e) => {
+    setMoreDetails((prevUser) => ({
+      ...prevUser,
+      [e.target.name]: e.target.value,
+    }));
+  };
   return (
     <>
-    
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
         <div className="relative w-80 my-6 mx-auto max-w-3xl">
           {/*content*/}
@@ -68,25 +86,22 @@ const ModelBox = ({close,btnName,CaptionPlaceHolder,isLocation,isUpdate,title}) 
             {/*body*/}
             <div className="relative pl-0 pr-0 pt-3 flex-auto">
               <div className="ml-3">
-              <InputBox
-                type="file"
-                lable={false}
-                onchange={handleImageChange}
-                customClass="block w-full text-sm text-black file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-slate-800 file:text-white hover:file:bg-slate-950 "
-              />
-              </div>
-              {
-                imagePreview &&                   <div
-          
-                className="relative overflow-hidden w-full mt-3 h-40 aspect-w-1 aspect-h-1"
-              >
-                <img
-                  src={imagePreview}
-                  className="object-cover w-full h-full"
-                  alt="preview"
+                <InputBox
+                  type="file"
+                  lable={false}
+                  onchange={handleImageChange}
+                  customClass="block w-full text-sm text-black file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-slate-800 file:text-white hover:file:bg-slate-950 "
                 />
               </div>
-              } 
+              {imagePreview && (
+                <div className="relative overflow-hidden w-full mt-3 h-40 aspect-w-1 aspect-h-1">
+                  <img
+                    src={imagePreview}
+                    className="object-cover w-full h-full"
+                    alt="preview"
+                  />
+                </div>
+              )}
               <div className="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
                 <label htmlFor="editor" className="sr-only">
                   Publish post
@@ -94,21 +109,81 @@ const ModelBox = ({close,btnName,CaptionPlaceHolder,isLocation,isUpdate,title}) 
                 <textarea
                   id="editor"
                   rows={3}
-                  onChange={(e)=>setCaption(e.target.value)}
+                  onChange={(e) => setCaption(e.target.value)}
                   className="block w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:outline-none dark:text-white dark:placeholder-gray-400"
                   placeholder={CaptionPlaceHolder}
                   required=""
                   defaultValue={""}
                 />
-                {
-                   isLocation && <InputBox
+                {isLocation && (
+                  <InputBox
                     type="text"
                     placeholder="Location"
-                    onchange={(e)=>setLocation(e.target.value)}
-                    customClass="peer h-full w-full  border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-1 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                    onchange={(e) => setLocation(e.target.value)}
+                    customClass="peer h-full w-full border-b  border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-1 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                   />
-                }
-                
+                )}
+               {showMore && <div className="flex flex-row-reverse">
+                  <InputBox
+                    type="checkbox"
+                    onchange={() => setAddDetails(!addDetails)}
+                    lable={true}
+                    name="do You Want to add More details About Post"
+                    customClass="w-4 h-4 text-gray-600 bg-gray-100 border-gray-300 rounded focus:ring-0 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                </div>}
+                {addDetails &&  (
+                  <>
+                    <InputBox
+                      type="date"
+                      name="date"
+                      onchange={handleMoreDetails}
+                      customClass="peer h-full w-full border-b  border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-1 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                      lable={false}
+                      placeholder="Select date"
+                    />
+                    <InputBox
+                      type="time"
+                      name="time"
+                      onchange={handleMoreDetails}
+                      customClass="peer h-full w-full border-b  border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-1 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                      lable={false}
+                      placeholder="Select time"
+                    />
+                    <InputBox
+                      type="text"
+                      name="vie"
+                      onchange={handleMoreDetails}
+                      customClass="peer h-full w-full border-b  border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-1 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                      lable={false}
+                      placeholder="travel via"
+                    />
+                    <InputBox
+                      type="number"
+                      name="Expenses"
+                      onchange={handleMoreDetails}
+                      customClass="peer h-full w-full border-b  border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-1 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                      lable={false}
+                      placeholder="expenses"
+                    />
+                    <InputBox
+                      type="text"
+                      name="whenToGo"
+                      onchange={handleMoreDetails}
+                      customClass="peer h-full w-full border-b  border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-1 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                      lable={false}
+                      placeholder="Best time to go"
+                    />
+                    <InputBox
+                      type="text"
+                      name="carrie"
+                      onchange={handleMoreDetails}
+                      customClass="peer h-full w-full border-b  border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-1 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                      lable={false}
+                      placeholder="what did you carrie?"
+                    />
+                  </>
+                )}
               </div>
             </div>
             {/*footer*/}
@@ -116,11 +191,10 @@ const ModelBox = ({close,btnName,CaptionPlaceHolder,isLocation,isUpdate,title}) 
               <Button
                 type="button"
                 name={btnName}
-                loader={loader} 
+                loader={loader}
                 customClass="text-white w-1/2 bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                click={isUpdate?updateProfile:addNewPost}
+                click={isUpdate ? updateProfile : addNewPost}
               />
-             
             </div>
           </div>
         </div>
@@ -130,4 +204,4 @@ const ModelBox = ({close,btnName,CaptionPlaceHolder,isLocation,isUpdate,title}) 
   );
 };
 
-export default ModelBox
+export default ModelBox;

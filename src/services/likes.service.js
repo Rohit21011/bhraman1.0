@@ -42,3 +42,39 @@ export const likes = async (postId, followedUserId) => {
 
   return false; // Error updating likes
 };
+
+export const likeCount = async (postId, followedUserId) => {
+  try {
+    const postsCollection = collection(db, 'posts');
+    const postDocRef = doc(postsCollection, postId);  // Use doc to get a reference to the specific document
+    const postDoc = await getDoc(postDocRef);
+
+
+      const likes = postDoc.data().likes || [];
+    if (likes.includes(auth.currentUser.uid)){
+      return {
+        getLikeStatus:true,
+        getLikesCount:likes.length
+      }
+
+    }
+    else{
+      return {
+        getLikeStatus:false,
+        getLikesCount:likes.length
+      }
+    }
+      
+    
+        // User already liked the post, remove the like
+       
+      
+  }
+    catch (err) {
+    console.error('Error updating likes:', err);
+  }
+
+  // Error updating likes
+};
+
+
